@@ -4,13 +4,6 @@ import { TImgPosition } from '@/features/card';
 
 export const initialState: ICardsStore = {
   cards: [
-    // Only text
-    {
-      id: 1,
-      title: "Drinking water isn't just about quenching",
-      imgPosition: 'onlyText',
-      counter: 1,
-    },
     {
       id: 2,
       title:
@@ -19,38 +12,8 @@ export const initialState: ICardsStore = {
       counter: 10,
     },
     {
-      id: 3,
-      title:
-        "Drinking water isn't just about quenching your thirst. It plays a crucial role in maintaining the proper functioning of your",
-      imgPosition: 'onlyText',
-      counter: '+10',
-    },
-    {
-      id: 4,
-      title:
-        "Drinking water isn't just about quenching your thirst. It plays a crucial role in maintaining the proper functioning of your body, and staying properly hydrated is vital ",
-      imgPosition: 'onlyText',
-    },
-    // Image left
-    {
       id: 5,
       title: 'quenching your thirst. It plays a cru',
-      img: './img1.jpg',
-      imgPosition: 'left',
-      counter: 10,
-    },
-    {
-      id: 6,
-      title:
-        "Drinking water isn't just about quenching your thirst. It plays a cru bbb",
-      img: './img1.jpg',
-      imgPosition: 'left',
-      counter: 10,
-    },
-    {
-      id: 7,
-      title:
-        "Drinking water isn't just about quenching your thirst. It plays a crucial role in  in maintaining the a bbbbbbbbb",
       img: './img1.jpg',
       imgPosition: 'left',
       counter: 10,
@@ -61,16 +24,15 @@ export const initialState: ICardsStore = {
         "Drinking water isn't just about quenching your thirst. It plays a crucial role in maintaining the proper functioning of your body a bbbbbbbbb",
       img: './img1.jpg',
       imgPosition: 'left',
-      counter: 10,
+      counter: '+10',
     },
-    // Image vertical
     {
       id: 9,
       title:
         "Drinking water isn't just about quenching your thirst. It plays a crucial role in maintaining the proper functioning of your body a bbbbbbbbb",
       img: './img2.jpg',
       imgPosition: 'top',
-      counter: 10,
+      counter: '+10',
     },
     {
       id: 10,
