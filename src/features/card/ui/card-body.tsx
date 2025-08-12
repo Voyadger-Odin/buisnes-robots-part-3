@@ -9,10 +9,20 @@ export const CardBody = ({
   cardData,
   onOpenEdit,
   onInputTitle,
+  onMouseEnter,
+  onMouseLeave,
+  onClick,
+  isHover,
+  isSelected,
 }: {
   cardData: CardProps;
   onOpenEdit?: MouseEventHandler<HTMLDivElement> | undefined;
   onInputTitle: (title: string) => void;
+  onMouseEnter?: MouseEventHandler<HTMLDivElement> | undefined;
+  onMouseLeave?: MouseEventHandler<HTMLDivElement> | undefined;
+  onClick?: MouseEventHandler<HTMLDivElement> | undefined;
+  isHover?: boolean;
+  isSelected?: boolean;
 }) => {
   const textEndRef = useRef(null);
   const countRef = useRef(null);
@@ -26,8 +36,6 @@ export const CardBody = ({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       el.style.height = 'auto';
-
-      // console.log(el.scrollHeight);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
@@ -72,15 +80,20 @@ export const CardBody = ({
     <div
       className={cn(
         'relative',
-        'w-[345px] min-h-[68px] p-4 overflow-hidden',
+        'w-[345px] min-h-[68px] p-4 overflow-hidden rounded-[25px]',
         'flex gap-2',
         'border-[1px] border-[#0000]',
-        cardData.edit && 'border border-[#229CFD] rounded-[25px]',
+        cardData.edit && 'border border-[#229CFD]',
+        isHover && 'border border-[#229CFD] shadow-[0_0_5px_#149DFF36]',
+        isSelected && 'bg-[#F1F6FD]',
         cardData.imgPosition === 'onlyText' && 'flex-row items-center',
         cardData.imgPosition === 'left' && 'flex-row items-center',
         cardData.imgPosition === 'top' && 'flex-col',
         cardData.imgPosition === 'bottom' && 'flex-col-reverse',
       )}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={onClick}
     >
       {cardData.imgPosition !== 'onlyText' && (
         <div
@@ -195,11 +208,14 @@ export const CardBody = ({
         >
           <div
             className={cn(
-              'py-2 cursor-pointer relative',
+              'py-2 cursor-pointer relative z-[100]',
               cardData.imgPosition === 'top' &&
                 'bg-[#8585854D] py-[10px] px-[6px] rounded-[11px] w-[28px] h-[26px] my-3 backdrop-blur-sm',
             )}
-            onClick={onOpenEdit}
+            onClick={(event) => {
+              event.stopPropagation();
+              onOpenEdit && onOpenEdit(event);
+            }}
           >
             <MenuIcon
               fill={cardData.imgPosition === 'top' ? '#FFFFFF' : '#B4B4B4'}
@@ -223,7 +239,13 @@ export const CardBody = ({
                 Number(cardData.counter) &&
                   `${cardData.counter}`.length > 0 &&
                   `${cardData.counter}`[0] != '+'
-                  ? 'border-[0.5px] border-[#B4B4B488] rounded-full'
+                  ? cn(
+                      'border-[0.5px] border-[#B4B4B488] rounded-full',
+                      isHover && 'border-[#229CFD]',
+                      isHover &&
+                        cardData.imgPosition !== 'bottom' &&
+                        'text-[#229CFD]',
+                    )
                   : cn(
                       'border-none rounded-full text-white',
                       'bg-linear-to-tr from-[#068DFB] to-[#3FCCFF] bg-liner-[90]',
