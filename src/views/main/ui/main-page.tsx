@@ -3,7 +3,7 @@
 import { CardBody, CardEdit, TImgPosition } from '@/features/card';
 import { useAppDispatch, useAppSelector } from '@/shared/lib/redux';
 import { cardsStore } from '@/features/card/model/cards.store';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
@@ -51,6 +51,17 @@ export const MainPage = () => {
     );
   };
 
+  const isCurrentEdit = useMemo(() => {
+    if (cards?.cards) {
+      for (let i = 0; i < cards.cards.length; i++) {
+        if (cards.cards[i].edit) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }, [cards?.cards]);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.code) {
@@ -60,6 +71,7 @@ export const MainPage = () => {
           );
 
           if (
+            !isCurrentEdit &&
             cards?.cards &&
             typeof cardHoverIndex === 'number' &&
             cardHoverIndex > 0
@@ -75,6 +87,7 @@ export const MainPage = () => {
           );
 
           if (
+            !isCurrentEdit &&
             cards?.cards &&
             typeof cardHoverIndex === 'number' &&
             cardHoverIndex < cards.cards.length - 1
@@ -89,7 +102,7 @@ export const MainPage = () => {
             (card) => card.id === hoverCardId,
           );
 
-          if (cardHover && !cardHover.edit) {
+          if (cardHover && !isCurrentEdit) {
             event.preventDefault();
 
             setSelectedCardsId((prevState) => {
@@ -135,8 +148,8 @@ export const MainPage = () => {
             >
               <CardBody
                 cardData={card}
-                isHover={hoverCardId === card.id}
-                isSelected={selectedCardsId.has(card.id)}
+                isHover={!isCurrentEdit && hoverCardId === card.id}
+                isSelected={!isCurrentEdit && selectedCardsId.has(card.id)}
                 onOpenEdit={() => {
                   handleEditOpen(card.id, true);
                 }}
@@ -147,10 +160,10 @@ export const MainPage = () => {
                   setHoverCardId(card.id);
                 }}
                 onMouseLeave={() => {
-                  setHoverCardId(undefined);
+                  // setHoverCardId(undefined);
                 }}
                 onClick={() => {
-                  if (!card.edit) {
+                  if (!isCurrentEdit) {
                     setSelectedCardsId((prevState) => {
                       const newSet = new Set(prevState);
                       if (selectedCardsId.has(card.id)) {

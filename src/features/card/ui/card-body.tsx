@@ -86,115 +86,121 @@ export const CardBody = ({
         cardData.edit && 'border border-[#229CFD]',
         isHover && 'border border-[#229CFD] shadow-[0_0_5px_#149DFF36]',
         isSelected && 'bg-[#F1F6FD]',
-        cardData.imgPosition === 'onlyText' && 'flex-row items-center',
-        cardData.imgPosition === 'left' && 'flex-row items-center',
-        cardData.imgPosition === 'top' && 'flex-col',
-        cardData.imgPosition === 'bottom' && 'flex-col-reverse',
       )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
     >
-      {cardData.imgPosition !== 'onlyText' && (
-        <div
-          className={cn(
-            cardData.imgPosition === 'left' && 'h-full',
-            (cardData.imgPosition === 'top' ||
-              cardData.imgPosition === 'bottom') &&
-              'h-[calc(180px-16px)]',
-          )}
-        >
+      <div
+        className={cn(
+          'flex flex-row gap-2 w-full',
+          cardData.imgPosition === 'onlyText' && 'flex-row items-center',
+          cardData.imgPosition === 'left' && 'flex-row items-center',
+          cardData.imgPosition === 'top' && 'flex-col',
+          cardData.imgPosition === 'bottom' && 'flex-col-reverse',
+        )}
+      >
+        {cardData.imgPosition !== 'onlyText' && (
           <div
             className={cn(
-              'overflow-hidden',
-              cardData.imgPosition === 'left' &&
-                'w-[58px] h-full min-h-[58px] relative',
-              cardData.imgPosition === 'top' &&
-                'w-full h-[180px] absolute top-0 left-0 p-px',
-              cardData.imgPosition === 'bottom' &&
-                'w-full h-[180px] absolute bottom-0 left-0 p-px',
+              cardData.imgPosition === 'left' && 'h-full',
+              (cardData.imgPosition === 'top' ||
+                cardData.imgPosition === 'bottom') &&
+                'h-[calc(180px-16px)]',
             )}
           >
             <div
               className={cn(
                 'overflow-hidden',
                 cardData.imgPosition === 'left' &&
-                  'min-w-[58px] w-[58px] h-[58px] rounded-[13px] top-0',
+                  'w-[58px] h-full min-h-[58px] relative',
                 cardData.imgPosition === 'top' &&
-                  'w-full h-full rounded-b-[5px] rounded-t-[24px]',
+                  'w-full h-[180px] absolute top-0 left-0 p-px',
                 cardData.imgPosition === 'bottom' &&
-                  'w-full h-full rounded-b-[24px] rounded-t-[5px]',
+                  'w-full h-[180px] absolute bottom-0 left-0 p-px',
               )}
             >
-              {cardData.img ? (
-                <Image
-                  src={cardData.img}
-                  alt={'123'}
-                  width={1000}
-                  height={1000}
-                  quality={90}
-                  className={cn('object-cover')}
-                />
-              ) : (
-                <div
-                  className={
-                    'bg-[#F1F6FD] h-full flex items-center justify-center'
-                  }
-                >
-                  <ImgIcon
-                    className={cn(
-                      'w-[121px] h-[77px]',
-                      cardData.imgPosition === 'left' && 'w-[41px] h-[24px]',
-                    )}
+              <div
+                className={cn(
+                  'overflow-hidden',
+                  cardData.imgPosition === 'left' &&
+                    'min-w-[58px] w-[58px] h-[58px] rounded-[13px] top-0',
+                  cardData.imgPosition === 'top' &&
+                    'w-full h-full rounded-b-[5px] rounded-t-[24px]',
+                  cardData.imgPosition === 'bottom' &&
+                    'w-full h-full rounded-b-[24px] rounded-t-[5px]',
+                )}
+              >
+                {cardData.img ? (
+                  <Image
+                    src={cardData.img}
+                    alt={'123'}
+                    width={1000}
+                    height={1000}
+                    quality={90}
+                    className={cn('object-cover')}
                   />
-                </div>
-              )}
+                ) : (
+                  <div
+                    className={
+                      'bg-[#F1F6FD] h-full flex items-center justify-center'
+                    }
+                  >
+                    <ImgIcon
+                      className={cn(
+                        'w-[121px] h-[77px]',
+                        cardData.imgPosition === 'left' && 'w-[41px] h-[24px]',
+                      )}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className={'flex-1 break-all'}>
-        <div
-          className={
-            'w-full min-w-full max-w-full whitespace-break-spaces break-words text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]'
-          }
-        >
-          {cardData.edit ? (
-            <>
-              <textarea
-                ref={textareaRef}
-                value={cardData.title}
-                onInput={handleInput}
-                placeholder={'Write your idea!'}
-                rows={1}
-                className={cn(
-                  'w-full min-h-[16px] resize-none overflow-y-auto max-h-52',
-                  'text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]',
-                  'outline-none',
+        <div className={'flex-1 break-all'}>
+          <div
+            className={
+              'w-full min-w-full max-w-full whitespace-break-spaces break-words text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]'
+            }
+          >
+            {cardData.edit ? (
+              <>
+                <textarea
+                  ref={textareaRef}
+                  value={cardData.title}
+                  onInput={handleInput}
+                  placeholder={'Write your idea!'}
+                  rows={1}
+                  className={cn(
+                    'w-full min-h-[16px] resize-none overflow-y-auto max-h-52',
+                    'text-[#3B4552] font-[Urbanist] tracking-[0px] font-normal text-[14px] leading-[140%]',
+                    'outline-none',
+                  )}
+                />
+              </>
+            ) : (
+              <>
+                {cardData.title ? (
+                  <span>{cardData.title}</span>
+                ) : (
+                  <span className={'text-gray-400'}>Some text</span>
                 )}
-              />
-            </>
-          ) : (
-            <>
-              {cardData.title ? (
-                <span>{cardData.title}</span>
-              ) : (
-                <span className={'text-gray-400'}>Some text</span>
-              )}
 
-              {cardData.counter && (
-                <>
-                  <span ref={textEndRef} className={'opacity-0 w-[100px]'}>
-                    1
-                  </span>
-                  <span className={'opacity-0 px-3'}>
-                    {overlayText ? cardData.counter : ''}
-                  </span>
-                </>
-              )}
-            </>
-          )}
+                {cardData.counter && (
+                  <>
+                    <span ref={textEndRef} className={'opacity-0 w-[100px]'}>
+                      1
+                    </span>
+                    <span className={'opacity-0 px-3'}>
+                      {overlayText ? cardData.counter : ''}
+                    </span>
+                  </>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
 
